@@ -19,25 +19,35 @@
     <body>
         {% block menu %}
             <div class="topnav" id="myTopnav">
-                <div style="padding-left: 100px;">
+                <div style="padding-left: 100px; float: left;">
                     <a href="{{ path('app_recipe_index') }}" style="margin-top: 85px; margin-right: 30px;"><img id="imgnavbar" src="/img/recipe.png">Toutes les recettes</a>
                     
                     <a href="{{ path('app_category_show', {id: 1}) }}" style="margin-top: 85px; margin-right: 30px;"><img id="imgnavbar" src="/img/entree.png">Entrées</a>
                     <a href="{{ path('app_category_show', {id: 2}) }}" style="margin-top: 85px; margin-right: 30px;"><img id="imgnavbar" src="/img/plat.png">Plats</a>
-                    <a href="{{ path('app_category_show', {id: 3}) }}" style="margin-top: 85px; margin-right: 250px;"><img id="imgnavbar" src="/img/dessert.png">Desserts</a>
+                    <a href="{{ path('app_category_show', {id: 3}) }}" style="margin-top: 85px;"><img id="imgnavbar" src="/img/dessert.png">Desserts</a>
                 </div>
-                <div style="margin-right: auto; margin-left: auto; text-align: center;">
+                <div style="margin-right: auto; margin-left: 1000px; text-align: center;">
                     <a href="{{ path('app_homepage') }}" ><img style="height: 200px; width: auto;margin-right: auto; margin-left: auto; text-align: center;" src="/img/logo_center.png"></a>
                 </div>
-                <div>
+                <div style="padding-right: 100px; float: right;">
                     {% if is_granted('ROLE_USER') %}
-                        <a href="{{ path('my_recipe', {id: app.user.id}) }}" style="margin-top: 85px; margin-right: 30px; margin-left: 400px;">Mes recettes</a>
+                        <a href="{{ path('my_recipe', {id: app.user.id}) }}" style="margin-top: 85px; margin-right: 30px;"><img id="imgnavbar" src="/img/toque.png">Mes recettes</a>
                         <a href="{{ path('logout') }}" style="margin-top: 85px; margin-right: 30px;">Se déconnecter</a>
                         <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/profile_icon.png" style="width: 30px; height: 30px; margin-top: 85px;"></a>
                     {%  else %}
-                        <a href="{{ path('login') }}" style="margin-top: 85px; margin-left: 500px;">Se connecter</a>
+                        <a href="{{ path('login') }}" style="margin-top: 85px;">Se connecter</a>
                         <a href="{{ path('app_user_new') }}" style="margin-top: 85px; margin-left: 30px;">S'inscrire</a>
                     {% endif %}
+{#                    {% if is_granted('ROLE_USER') %}#}
+{#                        <li class="dropdown" style="float: right; margin-top: ">#}
+{#                            <a class="dropdown" href="#"><img id="imgnavbar" src="/img/admin_icon.png" style="width: 20px; height: 20px;"/></a>#}
+{#                            <div class="dropdown-content" style="margin-top: 30px;">#}
+{#                                <a href="#">Utilisateurs</a>#}
+{#                                <a href="#">Recettes</a>#}
+{#                                <a href="#">Catégories</a>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                    {% endif %}#}
                 </div>
             </div>
         {% endblock %}
@@ -46,9 +56,9 @@
         {% endblock %}
 
         {% block footer %}
-            <div style="background-color: white; height: 50px; width: auto;">
-                <p style="text-align: center; margin-top: 30px;">By Karina TEYSSERE & Brandon REYNIER</p>
-            </div>
+{#            <div style="background-color: white; height: 50px; width: auto;">#}
+{#                <p style="text-align: center; margin-top: 30px;">By Karina TEYSSERE & Brandon REYNIER</p>#}
+{#            </div>#}
         {% endblock %}
     </body>
 </html>

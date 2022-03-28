@@ -1,11 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+    {{ form_start(form) }}
 
-    {{ include('user/_form.html.twig') }}
+    <h2 style="text-align: center; margin-top: 100px; margin-bottom: 50px">S'inscrire</h2>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 500px; margin-left: auto; margin-right: auto;">
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Nom d'utilisateur : {{ form_widget(form.name) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse mail : {{ form_widget(form.mail) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Mot de passe : {{ form_widget(form.password) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse postale : {{ form_widget(form.address) }}</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+        <button class="btn">{{ button_label|default('Créer') }}</button>
+    </div>
+{#    {{ include('user/_form.html.twig') }}#}
+
+{#    <a href="{{ path('app_user_index') }}">back to list</a>#}
+    {{ form_end(form) }}
 {% endblock %}
