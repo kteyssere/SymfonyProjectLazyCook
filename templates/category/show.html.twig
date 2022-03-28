@@ -1,9 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}Catégorie "{{ category.name }}"{% endblock %}
 
 {% block body %}
-    <h1>{{ category.name }}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ path('app_recipe_new') }}">Créer une nouvelle recette</a>
+        </div>
+    {% endif %}
+    <div class="grille">
+        {% for recipe in recipes %}
+            <div class="grid-item">
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
+                <p class="p">{{ recipe.name }} - {{ recipe.numberOfPerson }}<img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> - {{ recipe.preparationTime }}min<img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"></p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Voir</a>
+                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                {% endif %}
+            </div>
+
+        {% else %}
+            <p>Aucunes recettes :-(</p>
+        {% endfor %}
+    </div>
+{#    <h1>{{ category.name }}</h1>#}
 
 {#    <table class="table">#}
 {#        <tbody>#}
@@ -18,18 +38,18 @@
 {#        </tbody>#}
 {#    </table>#}
 
-    {% for recipe in recipes %}
-    <div>
-        <p>{{ recipe.picture }}</p>
-        <p>{{ recipe.name }}</p>
-    </div>
+{#    {% for recipe in recipes %}#}
+{#    <div>#}
+{#        <p>{{ recipe.picture }}</p>#}
+{#        <p>{{ recipe.name }}</p>#}
+{#    </div>#}
 
-{% else %}
-    <p>Aucune recette pour cette catégorie</p>
-    {% endfor %}
-    <a href="{{ path('app_category_index') }}">back to list</a>
+{#{% else %}#}
+{#    <p>Aucune recette pour cette catégorie</p>#}
+{#    {% endfor %}#}
+{#    <a href="{{ path('app_category_index') }}">back to list</a>#}
 
-    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
+{#    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>#}
 
-    {{ include('category/_delete_form.html.twig') }}
+{#    {{ include('category/_delete_form.html.twig') }}#}
 {% endblock %}

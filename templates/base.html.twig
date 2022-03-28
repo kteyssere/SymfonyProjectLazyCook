@@ -38,16 +38,17 @@
                         <a href="{{ path('login') }}" style="margin-top: 85px;">Se connecter</a>
                         <a href="{{ path('app_user_new') }}" style="margin-top: 85px; margin-left: 30px;">S'inscrire</a>
                     {% endif %}
-{#                    {% if is_granted('ROLE_USER') %}#}
-{#                        <li class="dropdown" style="float: right; margin-top: ">#}
-{#                            <a class="dropdown" href="#"><img id="imgnavbar" src="/img/admin_icon.png" style="width: 20px; height: 20px;"/></a>#}
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 85px; margin-left: 10px;"></a>
+{#                        <li class="dropdown" style="float: right">#}
+{#                            <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 85px; margin-left: 10px;"></a>#}
 {#                            <div class="dropdown-content" style="margin-top: 30px;">#}
 {#                                <a href="#">Utilisateurs</a>#}
 {#                                <a href="#">Recettes</a>#}
 {#                                <a href="#">Catégories</a>#}
 {#                            </div>#}
 {#                        </li>#}
-{#                    {% endif %}#}
+                    {% endif %}
                 </div>
             </div>
         {% endblock %}

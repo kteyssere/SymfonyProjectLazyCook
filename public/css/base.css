@@ -92,6 +92,8 @@ ul.topnav2 li a {
     text-decoration: none;
     display: block;
     text-align: left;
+    height: 100px;
+    width: 100px;
 }
 
 .topnav a:hover, .dropdown:hover .dropbtn {
@@ -161,8 +163,9 @@ ul.topnav2 li a {
 }
 
 #product_img {
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 350px;
+    border: solid 1px black;
 }
 
 .grille {
@@ -174,7 +177,7 @@ ul.topnav2 li a {
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     justify-content: center;
-    grid-gap: 10px;
+    grid-gap: 120px;
 }
 
 .grid-item {
@@ -187,6 +190,12 @@ ul.topnav2 li a {
 .p {
     background-color: white;
     text-align: center;
+    width: 400px;
+    border-radius: 0px 0px 10px 10px;
+    border-bottom: solid 1px black;
+    border-left: solid 1px black;
+    border-right: solid 1px black;
+    padding: 7px;
 }
 
 #b {
