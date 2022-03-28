@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentary index{% endblock %}
+
+{% block body %}
+    <h1>Commentary index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentary in commentaries %}
+            <tr>
+                <td>{{ commentary.id }}</td>
+                <td>{{ commentary.content }}</td>
+                <td>
+                    <a href="{{ path('app_commentary_show', {'id': commentary.id}) }}">show</a>
+                    <a href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commentary_new') }}">Create new</a>
+{% endblock %}
