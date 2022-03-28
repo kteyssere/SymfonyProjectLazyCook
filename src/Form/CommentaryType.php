@@ -12,10 +12,12 @@ class CommentaryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
             ->add('content')
-            ->add('user')
-            ->add('recipe')
+            //->add('user')
+            //->add('recipe')
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

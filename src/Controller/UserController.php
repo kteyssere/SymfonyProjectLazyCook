@@ -40,7 +40,7 @@ class UserController extends AbstractController
             );
             $user->setPassword($hashedPassword);
 
-            $user->setRoles('ROLE_ADMIN');
+            $user->setRoles('ROLE_USER');
 
             $userRepository->add($user);
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -55,6 +55,7 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -80,19 +81,12 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user);
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/profile', name: 'app_user_profile')]
-    public function profile()
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $this->getUser()
-        ]);
     }
 
 }
