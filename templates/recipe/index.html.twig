@@ -3,47 +3,70 @@
 {% block title %}Recipe index{% endblock %}
 
 {% block body %}
-    <h1>Recipe index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Picture</th>
-                <th>Ingredients</th>
-                <th>Utensils</th>
-                <th>PreparationTime</th>
-                <th>Difficulty</th>
-                <th>Name</th>
-                <th>Content</th>
-                <th>NumberOfPerson</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ path('app_recipe_new') }}">Créer une nouvelle recette</a>
+        </div>
+    {% endif %}
+    <div class="grille">
         {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.picture }}</td>
-                <td>{{ recipe.ingredients }}</td>
-                <td>{{ recipe.utensils }}</td>
-                <td>{{ recipe.preparationTime }}</td>
-                <td>{{ recipe.difficulty }}</td>
-                <td>{{ recipe.name }}</td>
-                <td>{{ recipe.content }}</td>
-                <td>{{ recipe.numberOfPerson }}</td>
-                <td>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="grid-item">
+            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
+            <p class="p">{{ recipe.name }} - {{ recipe.numberOfPerson }}<img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> - {{ recipe.preparationTime }}min<img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"></p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Voir</a>
+                <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+            {% endif %}
+        </div>
 
-    <a href="{{ path('app_recipe_new') }}">Create new</a>
+        {% else %}
+            <p>Aucunes recettes :-(</p>
+        {% endfor %}
+    </div>
+
+
+
+{#    <h1>Recipe index</h1>#}
+
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Picture</th>#}
+{#                <th>Ingredients</th>#}
+{#                <th>Utensils</th>#}
+{#                <th>PreparationTime</th>#}
+{#                <th>Difficulty</th>#}
+{#                <th>Name</th>#}
+{#                <th>Content</th>#}
+{#                <th>NumberOfPerson</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for recipe in recipes %}#}
+{#            <tr>#}
+{#                <td>{{ recipe.id }}</td>#}
+{#                <td> <img src="/upload/{{ recipe.picture }}" />#}
+{#                </td>#}
+{#                <td>{{ recipe.ingredients }}</td>#}
+{#                <td>{{ recipe.utensils }}</td>#}
+{#                <td>{{ recipe.preparationTime }}</td>#}
+{#                <td>{{ recipe.difficulty }}</td>#}
+{#                <td>{{ recipe.name }}</td>#}
+{#                <td>{{ recipe.content }}</td>#}
+{#                <td>{{ recipe.numberOfPerson }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>#}
+{#                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="10">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#    <a href="{{ path('app_recipe_new') }}">Create new</a>#}
 {% endblock %}
