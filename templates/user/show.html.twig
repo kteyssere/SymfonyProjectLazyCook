@@ -1,47 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Votre profil{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h2 style="text-align: center; margin-top: 100px; margin-bottom: 50px">Paramètres du profil</h2>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ user.address }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ user.name }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ user.mail }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>
-                    {% for role in user %}
-                    {{ role }}
-                    {% endfor %}
-                </td>
+    <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 500px; margin-left: auto; margin-right: auto;">
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Nom d'utilisateur : {{ user.name }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse mail : {{ user.mail }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Mot de passe : ********</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse postale : {{ user.address }}</p>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <button style="padding: 10px; margin-top: 40px; margin-bottom: 30px;"><a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a></button>
+{#        {{ include('user/_delete_form.html.twig') }}#}
+    </div>
 
-            </tr>
-        </tbody>
-    </table>
+{#    <table class="table">#}
+{#        <tbody>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <td>{{ user.id }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Password</th>#}
+{#                <td>{{ user.password }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Address</th>#}
+{#                <td>{{ user.address }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Name</th>#}
+{#                <td>{{ user.name }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Mail</th>#}
+{#                <td>{{ user.mail }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Roles</th>#}
+{#                <td>#}
+{#                    {% for role in user %}#}
+{#                    {{ role }}#}
+{#                    {% endfor %}#}
+{#                </td>#}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+{#            </tr>#}
+{#        </tbody>#}
+{#    </table>#}
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+{#    <a href="{{ path('app_user_index') }}">back to list</a>#}
 
-    {{ include('user/_delete_form.html.twig') }}
+
+
 {% endblock %}

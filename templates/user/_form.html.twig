@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{#    {{ form_widget(form) }}#}
+
+    <h2 style="text-align: center; margin-top: 100px; margin-bottom: 50px">Modifier le profil</h2>
+
+    <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 500px; margin-left: auto; margin-right: auto;">
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Nom d'utilisateur : {{ form_widget(form.name) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse mail : {{ form_widget(form.mail) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Mot de passe : {{ form_widget(form.password) }}</p>
+        </div>
+        <div style="margin-left: 10px;">
+            <p style="font-size: 16px; margin-top: 30px;">Adresse postale : {{ form_widget(form.address) }}</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}
