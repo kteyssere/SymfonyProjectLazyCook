@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentary;
 use App\Entity\Recipe;
+use App\Entity\User;
+use App\Form\CommentaryType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +23,7 @@ class RecipeController extends AbstractController
     /**
      * @var Security
      */
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {
@@ -51,7 +54,9 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
             $user = $this->security->getUser();
+
             $recipe->setUser($user);
 
 
@@ -70,7 +75,7 @@ class RecipeController extends AbstractController
                 // Move the file to the directory where brochures are stored
                 try {
                     $pictureFile->move(
-                        $this->getParameter('brochures_directory'),
+                        'upload',
                         $newFilename
                     );
                 } catch (FileException $e) {
@@ -96,8 +101,14 @@ class RecipeController extends AbstractController
     #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'])]
     public function show(Recipe $recipe): Response
     {
+        $commentary = new Commentary();
+        $commentary->setRecipe($recipe);
+        $form = $this->createForm(CommentaryType::class, $commentary);
+
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'commentary' => $recipe->getCommentaries(),
+            'form' => $form->createView()
         ]);
     }
 

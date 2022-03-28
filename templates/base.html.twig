@@ -33,7 +33,7 @@
                     {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('my_recipe', {id: app.user.id}) }}" style="margin-top: 85px; margin-right: 30px; margin-left: 400px;">Mes recettes</a>
                         <a href="{{ path('logout') }}" style="margin-top: 85px; margin-right: 30px;">Se déconnecter</a>
-                        <a href="{{ path('app_user_profile') }}"><img src="/img/profile_icon.png" style="width: 30px; height: 30px; margin-top: 85px;"></a>
+                        <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/profile_icon.png" style="width: 30px; height: 30px; margin-top: 85px;"></a>
                     {%  else %}
                         <a href="{{ path('login') }}" style="margin-top: 85px; margin-left: 500px;">Se connecter</a>
                         <a href="{{ path('app_user_new') }}" style="margin-top: 85px; margin-left: 30px;">S'inscrire</a>
