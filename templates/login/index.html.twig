@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2 style="text-align: center; margin-top: 150px; margin-bottom: 50px;">Connexion</h2>
+    <h4 style="text-align: center; margin-top: 70px; margin-bottom: 40px;">Connexion</h4>
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
     <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 400px; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
         <form action="{{ path('login') }}" method="post">
             <div style="text-align: center;">
-                <p style="font-size: 16px; margin-top: 30px;">Adresse mail :</p>
+                <p style="font-size: 14px; margin-top: 30px;">Adresse mail :</p>
                 <input type="text" id="username" name="_username" placeholder="..." required/>
             </div>
             <div style="text-align: center;">
-                <p style="font-size: 16px; margin-top: 30px;">Mot de passe :</p>
+                <p style="font-size: 14px; margin-top: 30px;">Mot de passe :</p>
                 <input type="password" id="password" name="_password" placeholder="..." required/>
             </div>
 
@@ -21,7 +21,7 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <div style="text-align: center;">
-                <button type="submit" style="padding: 10px; margin-top: 40px; margin-bottom: 30px;">Connexion</button>
+                <button class="btn" type="submit" style="padding: 10px; margin-top: 40px; margin-bottom: 30px; font-size: 14px; background-color: black; color: white;">Connexion</button>
             </div>
         </form>
     </div>

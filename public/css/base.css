@@ -30,7 +30,7 @@ body {margin:0;font-family:Arial}
     color: #f2f2f2;
     text-align: center;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 ul.topnav2 {
@@ -163,8 +163,8 @@ ul.topnav2 li a {
 }
 
 #product_img {
-    width: 400px;
-    height: 350px;
+    width: 300px;
+    height: 225px;
     border: solid 1px black;
 }
 
@@ -177,7 +177,7 @@ ul.topnav2 li a {
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     justify-content: center;
-    grid-gap: 120px;
+    grid-gap: 50px;
 }
 
 .grid-item {
@@ -190,7 +190,7 @@ ul.topnav2 li a {
 .p {
     background-color: white;
     text-align: center;
-    width: 400px;
+    width: 300px;
     border-radius: 0px 0px 10px 10px;
     border-bottom: solid 1px black;
     border-left: solid 1px black;
