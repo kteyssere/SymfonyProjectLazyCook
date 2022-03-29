@@ -132,6 +132,8 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setDatepublire(new \DateTime('now'));
+
             /** @var User $user */
             $user = $this->security->getUser();
 

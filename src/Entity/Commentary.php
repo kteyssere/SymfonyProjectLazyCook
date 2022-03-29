@@ -24,6 +24,10 @@ class Commentary
     #[ORM\JoinColumn(nullable: false)]
     private $recipe;
 
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private $datepublicom;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +65,18 @@ class Commentary
     public function setRecipe(?recipe $recipe): self
     {
         $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function getDatepublicom(): ?\DateTimeInterface
+    {
+        return $this->datepublicom;
+    }
+
+    public function setDatepublicom(\DateTimeInterface $datepublicom): self
+    {
+        $this->datepublicom = $datepublicom;
 
         return $this;
     }
