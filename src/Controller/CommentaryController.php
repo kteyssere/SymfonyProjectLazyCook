@@ -45,7 +45,7 @@ class CommentaryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //$commentary->setRecipe();
-            $commentary->setDatepublicom(new \DateTime('now'));
+            $commentary->setDatepublicom(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             /** @var User $user */
             $user = $this->security->getUser();
             $commentary->setRecipe($recipe);
