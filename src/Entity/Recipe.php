@@ -50,6 +50,10 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Commentary::class)]
     private $commentaries;
 
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private $datepublire;
+
+
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
@@ -206,6 +210,18 @@ class Recipe
                 $commentary->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDatepublire(): ?\DateTimeInterface
+    {
+        return $this->datepublire;
+    }
+
+    public function setDatepublire(\DateTimeInterface $datepublire): self
+    {
+        $this->datepublire = $datepublire;
 
         return $this;
     }
