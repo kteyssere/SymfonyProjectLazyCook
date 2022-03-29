@@ -24,7 +24,21 @@
             <p style="text-align: center;">{{ recipe.content }}</p>
         </div>
     </div>
-{#    <div class="grid-item">#}
+    <a href="{{ path('recipeToPdf', {id: recipe.id}) }}" target="_blank">Imprimer/Enregistrer la recette</a>
+    <!-- Facebook -->
+    <a href="http://www.facebook.com/sharer.php?u={{ app.request.uri }}" target="_blank">Share to FaceBook</a>
+
+    <!-- Twitter -->
+    <a href="http://twitter.com/share?url={{ app.request.uri }}&text=Recette sur LazyCook&hashtags=cooking" target="_blank">Twitter</a>
+
+    <!-- Reddit -->
+    <a href="http://reddit.com/submit?url={{ app.request.uri }}&title=Recette sur LazyCook" target="_blank">Reddit</a>
+
+    <!-- Email -->
+    <a href="mailto:?Subject=Recette sur LazyCook&Body=I%20saw%20this%20and%20thought%20of%20you!%20 {{ app.request.uri }}">Email</a>
+
+    </a>
+    {#    <div class="grid-item">#}
 {#        <div style="margin-left: 70px; float: left; height: auto; width: auto; margin-top: 70px;">#}
 {#            <img id="product_img" src="/upload/{{ recipe.picture }}" style="float: left; border-radius: 0px 0px 0px 0px; height: 650px; width: 700px;"/>#}
 {#        </div>#}

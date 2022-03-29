@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title of the PDF</title>
+</head>
+<body>
+<h1 style="text-align: center"><b>{{ recipe.name }}</b></h1>
+<p>Par : {{ recipe.user.name }}</p>
+<p>{{ recipe.preparationTime }} minutes | {{ recipe.numberOfPerson }} personne(s) |  {{ recipe.difficulty }}</p>
+<h1 style="text-align: center">Ingredients :</h1>
+<p style="text-align: center">{{ recipe.ingredients }}</p>
+<h1 style="text-align: center">Ustenciles :</h1>
+<p style="text-align: center">{{ recipe.utensils }}</p>
+<br>
+<p style="text-align: center">{{ recipe.content }} </p>
+</body>
+</html>
