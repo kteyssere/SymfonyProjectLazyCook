@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catégorie "{{ category.name }}"{% endblock %}
+{% block title %}Les {{ category.name }}{% endblock %}
 
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}

@@ -18,7 +18,7 @@
     </head>
     <body>
         {% block menu %}
-            <div class="topnav" id="myTopnav" style="padding-left: 60px; padding-right: 60px;">
+            <div class="topnav" id="myTopnav" style="padding-left: 50px; padding-right: 50px;">
                 <div style="float: left;">
                     <a href="{{ path('app_recipe_index') }}" style="margin-top: 50px; margin-right: 30px;"><img id="imgnavbar" src="/img/recipe.png">Toutes les recettes</a>
                     
@@ -26,13 +26,14 @@
                     <a href="{{ path('app_category_show', {id: 2}) }}" style="margin-top: 50px; margin-right: 30px;"><img id="imgnavbar" src="/img/plat.png">Plats</a>
                     <a href="{{ path('app_category_show', {id: 3}) }}" style="margin-top: 50px;"><img id="imgnavbar" src="/img/dessert.png">Desserts</a>
                 </div>
-                <div style="margin-right: auto; margin-left: 570px; text-align: center;">
+                <div style="margin-right: auto; margin-left: 550px; text-align: center;">
                     <a href="{{ path('app_homepage') }}" ><img style="height: 125px; width: auto;margin-right: auto; margin-left: auto; text-align: center;" src="/img/logo_center.png"></a>
                 </div>
                 <div style="float: right;">
                     {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('my_recipe', {id: app.user.id}) }}" style="margin-top: 50px; margin-right: 30px;"><img id="imgnavbar" src="/img/toque.png">Mes recettes</a>
                         <a href="{{ path('logout') }}" style="margin-top: 56px; margin-right: 30px;">Se déconnecter</a>
+                        <b style="color: white; float: left; margin-right: 15px; margin-top: 53px;">| {{ app.user.name }}</b>
                         <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/profile_icon.png" style="width: 30px; height: 30px; margin-top: 50px;"></a>
                     {%  else %}
                         <a href="{{ path('login') }}" style="margin-top: 50px;">Se connecter</a>

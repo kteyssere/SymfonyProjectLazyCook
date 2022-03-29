@@ -4,11 +4,31 @@
 
 {% block body %}
 
-    <div class="grid-item">
-        <div style="margin-left: 70px; float: left; height: auto; width: auto; margin-top: 70px;">
-            <img id="product_img" src="/upload/{{ recipe.picture }}" style="float: left; border-radius: 0px 0px 0px 0px; height: 650px; width: 700px;"/>
+    <div style="margin-right: 400px; margin-left: 400px; border: solid 1px black; margin-top: 100px; height: auto; margin-bottom: 100px; ">
+        <h2 style="text-align: center; padding-top: 15px;">{{ recipe.name }}</h2>
+        <p style="text-align: center; padding-bottom: 10px;">par {{ recipe.user.name }}</p>
+        <img id="product_img_detail" src="/upload/{{ recipe.picture }}"/>
+        <div style="border-bottom: solid 1px black;">
+            <p style="padding: 15px; text-align: center;"><img src="/img/time.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.preparationTime }} minutes | <img src="/img/nbperson.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} personne(s) | <img src="/img/level.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ingrédients :</h4>
+            <p style="text-align: center;">{{ recipe.ingredients }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ustensiles :</h4>
+            <p style="text-align: center;">{{ recipe.utensils }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Préparation :</h4>
+            <p style="text-align: center;">{{ recipe.content }}</p>
         </div>
     </div>
+{#    <div class="grid-item">#}
+{#        <div style="margin-left: 70px; float: left; height: auto; width: auto; margin-top: 70px;">#}
+{#            <img id="product_img" src="/upload/{{ recipe.picture }}" style="float: left; border-radius: 0px 0px 0px 0px; height: 650px; width: 700px;"/>#}
+{#        </div>#}
+{#    </div>#}
 {#    <div>#}
 {#        <div style="float: right; margin-top: 70px; width: 1612px; border-top: solid 1px black; padding-top: 15px; padding-bottom: 10px; border-bottom: solid 1px black; margin-right: 70px; border-right: solid 1px black;">#}
 {#            <h2 style="text-align: center;">{{ recipe.name }}</h2>#}
@@ -19,10 +39,10 @@
 {#        <p>Nombre de personnes : {{ recipe.numberOfPerson }} personne(s)</p>#}
 {#        <p>Difficulté : {{ recipe.difficulty }}</p>#}
 {#    </div>#}
-    <div style="float: right;">
-        <img src="/img/recipe_1.png" style="float: right; width: 1469px; height: 650px; margin-top: 70px; margin-right: 70px; border: solid 1px black;">
-        <b style="position: absolute; margin-top: 350px; margin-left: 550px; font-size: 42px; text-align: center;">{{ recipe.name }}</b>
-    </div>
+{#    <div style="float: right;">#}
+{#        <img src="/img/recipe_1.png" style="float: right; width: 1469px; height: 650px; margin-top: 70px; margin-right: 70px; border: solid 1px black;">#}
+{#        <b style="position: absolute; margin-top: 350px; margin-left: 550px; font-size: 42px; text-align: center;">{{ recipe.name }}</b>#}
+{#    </div>#}
 
 {#    <div style="float: right; position: relative; height: 650px;">#}
 {#        <div style="position:absolute;z-index:1">#}
@@ -86,12 +106,12 @@
 
 {#    {{ include('recipe/_delete_form.html.twig') }}#}
 
-{#<div>#}
-{#    {% for comm in commentary %}#}
-{#        <p>{{ comm.user.name }}</p>#}
-{#        <p>{{ comm.content }}</p>#}
-{#    {% endfor %}#}
-{#</div>#}
+<div>
+    {% for comm in commentary %}
+        <p>{{ comm.user.name }}</p>
+        <p>{{ comm.content }}</p>
+    {% endfor %}
+</div>
 
 {#    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}#}
 {#    {{ form_widget(form) }}#}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
+{% block title %}Les recettes{% endblock %}
 
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}
@@ -20,7 +20,7 @@
         </div>
 
         {% else %}
-            <p>Aucunes recettes :-(</p>
+            <p style="text-align: center; margin-top: 100px; margin-left: auto; margin-right: auto;">Aucunes recettes :-(</p>
         {% endfor %}
     </div>
 
