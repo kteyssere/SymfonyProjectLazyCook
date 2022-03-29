@@ -5,26 +5,20 @@
 {% block body %}
     <h1>Recipe index</h1>
 
-    {{ form_start(form) }}
-    {{ form_rest(form) }}
-    <input type="submit" value="Rechercer" />
-    {{ form_end(form) }}
-
-
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Picture</th>
-                <th>Ingredients</th>
-                <th>Utensils</th>
-                <th>PreparationTime</th>
-                <th>Difficulty</th>
-                <th>Name</th>
-                <th>Content</th>
-                <th>NumberOfPerson</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Picture</th>
+            <th>Ingredients</th>
+            <th>Utensils</th>
+            <th>PreparationTime</th>
+            <th>Difficulty</th>
+            <th>Name</th>
+            <th>Content</th>
+            <th>NumberOfPerson</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for recipe in recipes %}

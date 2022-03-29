@@ -53,9 +53,12 @@
     {{ include('recipe/_delete_form.html.twig') }}
 
 <div>
-    {% for comm in commentary %}
-        <p>{{ comm.user.name }}</p>
-        <p>{{ comm.content }}</p>
+    {% for commentary in commentary %}
+        <p>{{ commentary.user.name }}</p>
+        <p>{{ commentary.content }}</p>
+        {% if app.user.id == commentary.user.id %}
+    {{ include('commentary/_delete_form.html.twig') }}
+        {% endif %}
     {% endfor %}
 </div>
 
@@ -63,4 +66,6 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
+
+
 {% endblock %}
