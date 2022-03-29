@@ -6,6 +6,8 @@
 
 .idea
 
+.env
+
 # Email spool folder
 /app/spool/*
 
