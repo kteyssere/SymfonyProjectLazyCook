@@ -45,6 +45,82 @@ class RecipeRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findRecipeByName(string $value)
+    {
+        return $this->createQueryBuilder('r')
+            ->orWhere('r.name LIKE :val')
+            ->orWhere('r.ingredients LIKE :val')
+            ->setParameter('val', $value . '%')
+            ->orderBy('r.id', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findRecipeByDiff(string $value)
+    {
+        return $this->createQueryBuilder('r')
+            ->orWhere('r.difficulty LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findRecipeByTime(string $value)
+    {
+        return $this->createQueryBuilder('r')
+            ->orWhere('r.preparationTime LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.preparationTime', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findRecipeByNbPerson($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->orWhere('r.numberOfPerson LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.numberOfPerson', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findRecipeByCategory($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->orWhere('r.category LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Recipe[] Returns an array of Recipe objects
     //  */

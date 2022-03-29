@@ -37,7 +37,13 @@ class RecipeType extends AbstractType
             ->add('ingredients')
             ->add('utensils')
             ->add('preparationTime')
-            ->add('difficulty')
+            ->add('difficulty', ChoiceType::class, [
+                'choices'  => [
+                    'Facile' => 'facile',
+                    'Moyen' => 'moyen',
+                    'Difficile' => 'difficile',
+                ],
+            ])
             ->add('name')
             ->add('content')
             ->add('numberOfPerson')

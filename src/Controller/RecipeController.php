@@ -2,13 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Commentary;
 use App\Entity\Recipe;
 use App\Entity\User;
 use App\Form\CommentaryType;
 use App\Form\RecipeType;
+use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,24 +31,91 @@ class RecipeController extends AbstractController
      * @var Security
      */
     private Security $security;
+    private CategoryRepository $categoryRepository;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, CategoryRepository $categoryRepo)
     {
         $this->security = $security;
+        $this->categoryRepository = $categoryRepo;
+
     }
 
     #[Route('/', name: 'app_recipe_index', methods: ['GET'])]
-    public function index(RecipeRepository $recipeRepository): Response
+    public function index(RecipeRepository $recipeRepository, Request $request): Response
     {
+        $recipes = [];
+
+        $form = $this->createFormBuilder()
+                ->setMethod('GET')
+            ->add('query', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez un mot-clé'
+                ]
+            ])
+            ->add('difficulty', ChoiceType::class, [
+                'required' => false,
+                'choices'  => [
+                    'Facile' => 'facile',
+                    'Moyen' => 'moyen',
+                    'Difficile' => 'difficile',
+                ],
+            ])
+            ->add('category', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->categoryRepository->findAll(),
+                'choice_value' => 'id',
+                'choice_label' => function(?Category $category){
+                    return $category ? $category->getName() : '';
+                },
+            ])
+            ->add('numperson', NumberType::class, [
+                'required' => false,
+            ])
+            ->add('time', NumberType::class, [
+                'required' => false,
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $form->getData()['query'];
+            $difficulty = $form->getData()['difficulty'];
+            $nbperson = $form->getData()['numperson'];
+            $time = $form->getData()['time'];
+            $category = $form->getData()['category'];
+
+            if($query) {
+                $recipes = $recipeRepository->findRecipeByName($query);
+            } else if($difficulty) {
+                $recipes = $recipeRepository->findRecipeByDiff($difficulty);
+            } else if($nbperson) {
+                $recipes = $recipeRepository->findRecipeByNbPerson($difficulty);
+            } else if($time) {
+                $recipes = $recipeRepository->findRecipeByTime($time);
+            } else if($category){
+                $recipes = $recipeRepository->findRecipeByCategory($category);
+            } else {
+                $recipes = $recipeRepository->findAll();
+            }
+        } else {
+            $recipes = $recipeRepository->findAll();
+        }
+
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $recipeRepository->findAll(),
+            'recipes' => $recipes,
+            'form' => $form->createView()
         ]);
     }
+
 
     #[Route('/mes-recettes/{id}', name: 'my_recipe', methods: ['GET'])]
     public function allMyRecipe(RecipeRepository $recipeRepository, int $id): Response
     {
-        return $this->render('recipe/index.html.twig', [
+        return $this->render('recipe/myrecipe.html.twig', [
             'recipes' => $recipeRepository->findBy(['user'=>$id]),
         ]);
     }
@@ -138,4 +212,7 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }
