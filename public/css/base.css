@@ -168,6 +168,14 @@ ul.topnav2 li a {
     border: solid 1px black;
 }
 
+#product_img_detail {
+    height: auto;
+    width: 717px;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+
+}
+
 .grille {
     max-width: 1300px;
     width: auto;
