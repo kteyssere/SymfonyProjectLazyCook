@@ -53,7 +53,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->orWhere('r.name LIKE :val')
             ->orWhere('r.ingredients LIKE :val')
-            ->setParameter('val', $value . '%')
+            ->setParameter('val', '%' . $value . '%')
             ->orderBy('r.id', 'ASC')
 
             ->getQuery()
@@ -112,7 +112,7 @@ class RecipeRepository extends ServiceEntityRepository
     public function findRecipeByCategory($value)
     {
         return $this->createQueryBuilder('r')
-            ->orWhere('r.category LIKE :val')
+            ->orWhere('r.category = :val')
             ->setParameter('val', $value)
             ->orderBy('r.id', 'ASC')
 
