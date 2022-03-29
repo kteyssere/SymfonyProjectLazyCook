@@ -6,7 +6,9 @@
 
 .idea
 
-.env
+/.env.local.php
+/.env.*.local
+
 
 # Email spool folder
 /app/spool/*
