@@ -163,8 +163,8 @@ ul.topnav2 li a {
 }
 
 #product_img {
-    width: 300px;
-    height: 225px;
+    width: 320px;
+    height: 245px;
     border: solid 1px black;
 }
 
@@ -198,7 +198,7 @@ ul.topnav2 li a {
 .p {
     background-color: white;
     text-align: center;
-    width: 300px;
+    width: 320px;
     border-radius: 0px 0px 10px 10px;
     border-bottom: solid 1px black;
     border-left: solid 1px black;
@@ -260,4 +260,24 @@ textarea {
     height: 200px;
     margin-left: 8px;
     margin-right: 5px;
+}
+
+#form_difficulty {
+    width: 100px;
+    height: 38px;
+}
+
+#form_category {
+    width: 100px;
+    height: 38px;
+}
+
+#form_numperson {
+    width: 100px;
+    height: 38px;
+}
+
+#form_time {
+    width: 100px;
+    height: 38px;
 }
