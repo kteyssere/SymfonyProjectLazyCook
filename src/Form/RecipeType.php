@@ -26,6 +26,7 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('picture', FileType::class, [
+                'data_class' => null,
                 'label' => 'Photo de la recette',
                 'required' => false,
                 'constraints' => [
