@@ -19,11 +19,12 @@
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ustensiles :</h4>
             <p style="text-align: center;">{{ recipe.utensils }}</p>
         </div>
-        <div style="border-bottom: solid 1px black;">
+        <div>
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Préparation :</h4>
-            <p style="text-align: center;">{{ recipe.content }}</p>
+            <p style="text-align: center; padding: 10px; text-align: left;">{{ recipe.content }}</p>
         </div>
     </div>
+
     <a href="{{ path('recipeToPdf', {id: recipe.id}) }}" target="_blank">Imprimer/Enregistrer la recette</a>
     <!-- Facebook -->
     <a href="http://www.facebook.com/sharer.php?u={{ app.request.uri }}" target="_blank">Share to FaceBook</a>
@@ -67,78 +68,55 @@
 {#        </div>#}
 {#    </div>#}
 
-<div>
-    {% for commentary in commentary %}
-        <p>{{ commentary.user.name }}</p>
-        <p>{{ commentary.content }}</p>
-        {% if app.user.id == commentary.user.id %}
-    {{ include('commentary/_delete_form.html.twig') }}
-        {% endif %}
-    {% endfor %}
-</div>
 
-    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    {{ form_end(form) }}
+    {% if is_granted('ROLE_USER') %}
+        <div style="margin-right: 400px; margin-left: 400px; border: solid 1px black; margin-top: 100px; height: auto; margin-bottom: 100px; ">
+            <div>
+                <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Commentaires :</h4>
+            </div>
+            <div style="text-align: center;">
+                {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}
+                {{ form_widget(form.content) }}
+                <button class="btn" style="color: white; background-color: blue; width: 700px; margin-left: 8px; margin-right: 5px; margin-bottom: 10px;">{{ button_label|default('Publier') }}</button>
+                {{ form_end(form) }}
+            </div>
+            <div style="text-align: left; border-top: solid 1px black;">
+                {% for commentary in commentary %}
+                    <div style="padding: 15px; border-bottom: dotted 1px black;">
+                        <p style="font-weight: bold;">{{ commentary.user.name }} :</p>
+                        <p style="font-style: italic;">"{{ commentary.content }}"</p>
+                        {% if app.user.id == commentary.user.id %}
+                            {{ include('commentary/_delete_form.html.twig') }}
+                            <a class="btn" style="background-color: orange; color: white; width: 98px; margin-top: 5px;" href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">Modifier</a>
 
-{#    <table class="table">#}
-{#        <tbody>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <td>{{ recipe.id }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Picture</th>#}
-{#                <td><img id="product_img" src="/upload/{{ recipe.picture }}" /></td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Ingredients</th>#}
-{#                <td>{{ recipe.ingredients }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Utensils</th>#}
-{#                <td>{{ recipe.utensils }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>PreparationTime</th>#}
-{#                <td>{{ recipe.preparationTime }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Difficulty</th>#}
-{#                <td>{{ recipe.difficulty }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Name</th>#}
-{#                <td>{{ recipe.name }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Content</th>#}
-{#                <td>{{ recipe.content }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>NumberOfPerson</th>#}
-{#                <td>{{ recipe.numberOfPerson }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Publié par</th>#}
-{#                <td>{{ recipe.user.name }}</td>#}
-{#            </tr>#}
-{#        </tbody>#}
-{#    </table>#}
+                        {% endif %}
+                    </div>
 
-{#    <a href="{{ path('app_recipe_index') }}">back to list</a>#}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p style="text-align: center;">Pour accéder aux commentaires, veuillez-vous identifier.</p>
+    {% endif %}
 
-{#    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>#}
+{#    {% if is_granted('ROLE_USER') %}#}
+{#        <div>#}
+{#            {% for comm in commentary %}#}
+{#                <p>{{ comm.user.name }}</p>#}
+{#                <p>{{ comm.content }}</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <p style="text-align: center;">Pour accéder aux commentaires, veuillez-vous identifier.</p>#}
+{#    {% endif %}#}
 
-{#    {{ include('recipe/_delete_form.html.twig') }}#}
-
-<div>
-    {% for comm in commentary %}
-        <p>{{ comm.user.name }}</p>
-        <p>{{ comm.content }}</p>
-    {% endfor %}
-</div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div>
+            <a href="{{ path('app_recipe_index') }}">back to list</a>
+            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+            {{ include('recipe/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
 
 {#    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}#}
 {#    {{ form_widget(form) }}#}

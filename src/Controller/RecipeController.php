@@ -224,10 +224,12 @@ class RecipeController extends AbstractController
     public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         $pic = $recipe->getPicture();
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe->setPicture($pic);
+
             $recipeRepository->add($recipe);
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
