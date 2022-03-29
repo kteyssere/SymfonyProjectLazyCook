@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 #[Route('/recipe')]
 class RecipeController extends AbstractController
 {
@@ -32,11 +34,13 @@ class RecipeController extends AbstractController
      */
     private Security $security;
     private CategoryRepository $categoryRepository;
+    private RecipeRepository $recipeRepository;
 
-    public function __construct(Security $security, CategoryRepository $categoryRepo)
+    public function __construct(Security $security, CategoryRepository $categoryRepo, RecipeRepository $recipeRepo)
     {
         $this->security = $security;
         $this->categoryRepository = $categoryRepo;
+        $this->recipeRepository = $recipeRepo;
 
     }
 
@@ -186,16 +190,46 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/topdf', name: 'recipeToPdf', methods: ['GET'])]
+    public function converToPdf(int $id){
+        $recipe = $this->recipeRepository->find($id);
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('pdf/index.html.twig', [
+            'recipe' => $recipe
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream($recipe->getName()."-by-".$recipe->getUser()->getName()."-lazycook.pdf", [
+            "Attachment" => false
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         $pic = $recipe->getPicture();
-//       dd($pic);
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            //$recipe->setPicture($pic);
+            $recipe->setPicture($pic);
+
             $recipeRepository->add($recipe);
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
