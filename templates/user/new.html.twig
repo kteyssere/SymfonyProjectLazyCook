@@ -5,25 +5,30 @@
 {% block body %}
     {{ form_start(form) }}
 
-    <h2 style="text-align: center; margin-top: 100px; margin-bottom: 50px">S'inscrire</h2>
+    <h4 style="text-align: center; margin-top: 70px; margin-bottom: 40px">S'inscrire</h4>
 
-    <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 500px; margin-left: auto; margin-right: auto;">
+    <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 400px; margin-left: auto; margin-right: auto; text-align: center; margin-bottom: 70px;">
         <div style="margin-left: 10px;">
-            <p style="font-size: 16px; margin-top: 30px;">Nom d'utilisateur : {{ form_widget(form.name) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Nom d'utilisateur :</p>
+            {{ form_widget(form.name) }}
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 16px; margin-top: 30px;">Adresse mail : {{ form_widget(form.mail) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Adresse mail :</p>
+            {{ form_widget(form.mail) }}
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 16px; margin-top: 30px;">Mot de passe : {{ form_widget(form.password) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Mot de passe :</p>
+            {{ form_widget(form.password) }}
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 16px; margin-top: 30px;">Adresse postale : {{ form_widget(form.address) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Adresse postale :</p>
+            {{ form_widget(form.address) }}
+        </div>
+        <div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
+            <button class="btn" style="background-color: black; color: white; font-size: 14px;">{{ button_label|default('Inscription') }}</button>
         </div>
     </div>
-    <div style="text-align: center; margin-top: 50px;">
-        <button class="btn">{{ button_label|default('Créer') }}</button>
-    </div>
+
 {#    {{ include('user/_form.html.twig') }}#}
 
 {#    <a href="{{ path('app_user_index') }}">back to list</a>#}

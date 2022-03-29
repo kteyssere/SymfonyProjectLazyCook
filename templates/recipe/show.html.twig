@@ -3,54 +3,35 @@
 {% block title %}Recipe{% endblock %}
 
 {% block body %}
-    <h1>Recipe</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ recipe.id }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ recipe.picture }}</td>
-            </tr>
-            <tr>
-                <th>Ingredients</th>
-                <td>{{ recipe.ingredients }}</td>
-            </tr>
-            <tr>
-                <th>Utensils</th>
-                <td>{{ recipe.utensils }}</td>
-            </tr>
-            <tr>
-                <th>PreparationTime</th>
-                <td>{{ recipe.preparationTime }}</td>
-            </tr>
-            <tr>
-                <th>Difficulty</th>
-                <td>{{ recipe.difficulty }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ recipe.name }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ recipe.content }}</td>
-            </tr>
-            <tr>
-                <th>NumberOfPerson</th>
-                <td>{{ recipe.numberOfPerson }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="grid-item">
+        <div style="margin-left: 70px; float: left; height: auto; width: auto; margin-top: 70px;">
+            <img id="product_img" src="/upload/{{ recipe.picture }}" style="float: left; border-radius: 0px 0px 0px 0px; height: 650px; width: 700px;"/>
+        </div>
+    </div>
+{#    <div>#}
+{#        <div style="float: right; margin-top: 70px; width: 1612px; border-top: solid 1px black; padding-top: 15px; padding-bottom: 10px; border-bottom: solid 1px black; margin-right: 70px; border-right: solid 1px black;">#}
+{#            <h2 style="text-align: center;">{{ recipe.name }}</h2>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div style="float: right; margin-top: 50px; width: 1612px; padding-top: 10px; margin-right: 70px; text-align: center;">#}
+{#        <p>Temps de préparation : {{ recipe.preparationTime }} minutes</p>#}
+{#        <p>Nombre de personnes : {{ recipe.numberOfPerson }} personne(s)</p>#}
+{#        <p>Difficulté : {{ recipe.difficulty }}</p>#}
+{#    </div>#}
+    <div style="float: right;">
+        <img src="/img/recipe_1.png" style="float: right; width: 1469px; height: 650px; margin-top: 70px; margin-right: 70px; border: solid 1px black;">
+        <b style="position: absolute; margin-top: 350px; margin-left: 550px; font-size: 42px; text-align: center;">{{ recipe.name }}</b>
+    </div>
 
-    <a href="{{ path('app_recipe_index') }}">back to list</a>
-
-    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-
-    {{ include('recipe/_delete_form.html.twig') }}
+{#    <div style="float: right; position: relative; height: 650px;">#}
+{#        <div style="position:absolute;z-index:1">#}
+{#            <img src="/img/recipe_1.png" style="float: right; width: 1469px; height: 650px; margin-top: 70px; margin-right: 70px; border: solid 1px black; position: absolute; z-index: 1;">#}
+{#        </div>#}
+{#        <div style="position:absolute;top:360px; width:600px; height:400px; z-index:2;font-size:200%">#}
+{#            <b>{{ recipe.name }}</b>#}
+{#        </div>#}
+{#    </div>#}
 
 <div>
     {% for commentary in commentary %}
@@ -67,5 +48,67 @@
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 
+{#    <table class="table">#}
+{#        <tbody>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <td>{{ recipe.id }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Picture</th>#}
+{#                <td><img id="product_img" src="/upload/{{ recipe.picture }}" /></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Ingredients</th>#}
+{#                <td>{{ recipe.ingredients }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Utensils</th>#}
+{#                <td>{{ recipe.utensils }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>PreparationTime</th>#}
+{#                <td>{{ recipe.preparationTime }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Difficulty</th>#}
+{#                <td>{{ recipe.difficulty }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Name</th>#}
+{#                <td>{{ recipe.name }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Content</th>#}
+{#                <td>{{ recipe.content }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>NumberOfPerson</th>#}
+{#                <td>{{ recipe.numberOfPerson }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Publié par</th>#}
+{#                <td>{{ recipe.user.name }}</td>#}
+{#            </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+
+{#    <a href="{{ path('app_recipe_index') }}">back to list</a>#}
+
+{#    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>#}
+
+{#    {{ include('recipe/_delete_form.html.twig') }}#}
+
+{#<div>#}
+{#    {% for comm in commentary %}#}
+{#        <p>{{ comm.user.name }}</p>#}
+{#        <p>{{ comm.content }}</p>#}
+{#    {% endfor %}#}
+{#</div>#}
+
+{#    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}#}
+{#    {{ form_widget(form) }}#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#    {{ form_end(form) }}#}
 
 {% endblock %}
