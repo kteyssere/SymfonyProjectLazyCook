@@ -62,9 +62,9 @@ class RecipeController extends AbstractController
             ->add('difficulty', ChoiceType::class, [
                 'required' => false,
                 'choices'  => [
-                    'Facile' => 'facile',
-                    'Moyen' => 'moyen',
-                    'Difficile' => 'difficile',
+                    'Facile' => 'Facile',
+                    'Moyen' => 'Moyen',
+                    'Difficile' => 'Difficile',
                 ],
             ])
             ->add('category', ChoiceType::class, [
@@ -97,7 +97,7 @@ class RecipeController extends AbstractController
             } else if($difficulty) {
                 $recipes = $recipeRepository->findRecipeByDiff($difficulty);
             } else if($nbperson) {
-                $recipes = $recipeRepository->findRecipeByNbPerson($difficulty);
+                $recipes = $recipeRepository->findRecipeByNbPerson($nbperson);
             } else if($time) {
                 $recipes = $recipeRepository->findRecipeByTime($time);
             } else if($category){
@@ -244,6 +244,8 @@ class RecipeController extends AbstractController
     public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
+//            $com = $recipe->getCommentaries();
+//            $recipe->removeCommentary($com);
             $recipeRepository->remove($recipe);
         }
 
