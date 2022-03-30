@@ -4,44 +4,42 @@
 
 {% block body %}
 
-    <div>
-        {{ form_start(form) }}
-        {#    <p>{{ form_label(form.query) }}</p>#}
-        <p style="margin: 0;">{{ form_widget(form.query) }}</p>
-        <div style="text-align: center; height: 38px; margin-top: 10px;">
-            <p style="float: left; margin-right: 30px; margin-left: 300px;">Difficulté : {{ form_widget(form.difficulty) }}</p>
-            <p style="float: left; margin-right: 30px;">Catégorie : {{ form_widget(form.category) }}</p>
-            <p style="float: left; margin-right: 30px;">Nombre de personne : {{ form_widget(form.numperson) }}</p>
-            <p style="float: left;">Temps : {{ form_widget(form.time) }}</p>
+    <div style="margin-bottom: 250px;">
+        <div>
+            {{ form_start(form) }}
+            {#    <p>{{ form_label(form.query) }}</p>#}
+            <p style="margin: 0;">{{ form_widget(form.query) }}</p>
+            <div style="text-align: center; height: 38px; margin-top: 10px;">
+                <p style="float: left; margin-right: 30px; margin-left: 300px;">Difficulté : {{ form_widget(form.difficulty) }}</p>
+                <p style="float: left; margin-right: 30px;">Catégorie : {{ form_widget(form.category) }}</p>
+                <p style="float: left; margin-right: 30px;">Nombre de personne : {{ form_widget(form.numperson) }}</p>
+                <p style="float: left;">Temps : {{ form_widget(form.time) }}</p>
+            </div>
+            <input class="btn" style="background-color: royalblue; color: white; width: 1520px; margin-bottom: 30px;" type="submit" value="Rechercher" />
+            {{ form_end(form) }}
         </div>
 
+        {% if is_granted('ROLE_ADMIN') %}
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{{ path('app_recipe_new') }}">Créer une nouvelle recette</a>
+            </div>
+        {% endif %}
 
-        <input class="btn" style="background-color: royalblue; color: white; width: 1520px; margin-bottom: 30px;" type="submit" value="Rechercher" />
-        {{ form_end(form) }}
-    </div>
+        <div class="grille">
+            {% for recipe in recipes %}
+            <div class="grid-item">
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
+                <p class="p">{{ recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Voir</a>
+                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                {% endif %}
+            </div>
 
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="{{ path('app_recipe_new') }}">Créer une nouvelle recette</a>
+            {% else %}
+                <p style="text-align: center; margin-top: 100px; margin-left: auto; margin-right: auto;">Aucunes recettes :-(</p>
+            {% endfor %}
         </div>
-    {% endif %}
-
-    <div class="grille">
-
-        {% for recipe in recipes %}
-        <div class="grid-item">
-            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
-            <p class="p">{{ recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Voir</a>
-                <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
-            {% endif %}
-        </div>
-
-        {% else %}
-            <p style="text-align: center; margin-top: 100px; margin-left: auto; margin-right: auto;">Aucunes recettes :-(</p>
-        {% endfor %}
     </div>
 
 

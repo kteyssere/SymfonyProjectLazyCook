@@ -35,8 +35,15 @@ class RecipeType extends AbstractType
                     ])
                 ],
             ])
-            ->add('ingredients')
-            ->add('utensils')
+            ->add('name')
+            ->add('category', ChoiceType::class, [
+                'choices' => $this->categoryRepository->findAll(),
+                'choice_value' => 'id',
+                'choice_label' => function(?Category $category){
+                    return $category ? $category->getName() : '';
+                },
+            ])
+            ->add('numberOfPerson')
             ->add('preparationTime')
             ->add('difficulty', ChoiceType::class, [
                 'choices'  => [
@@ -45,17 +52,11 @@ class RecipeType extends AbstractType
                     'Difficile' => 'Difficile',
                 ],
             ])
-            ->add('name')
-            ->add('content')
-            ->add('numberOfPerson')
+            ->add('ingredients')
+            ->add('utensils')
+            ->add('content');
             //->add('user')
-            ->add('category', ChoiceType::class, [
-                'choices' => $this->categoryRepository->findAll(),
-                'choice_value' => 'id',
-                'choice_label' => function(?Category $category){
-                return $category ? $category->getName() : '';
-                },
-            ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
