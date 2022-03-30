@@ -40,6 +40,6 @@
     </div>
     <div style="text-align: center; margin-top: 50px;">
         <button class="btn" style="background-color: green; color: white; margin-right: auto; margin-left: auto; height: 40px;  margin-bottom: 5px; width: 130px;">{{ button_label|default('Créer') }}</button><br>
-        <a href="{{ path('my_recipe', {id: app.user.id}) }}" class="btn" style="height: 40px; background-color: black; color: white; width: 130px; margin-bottom: 50px;">Annuler</a>
+        <a href="{{ path('my_recipe', {id: app.user.id}) }}" class="btn" style="height: 40px; background-color: black; color: white; width: 130px; margin-bottom: 5px;">Annuler</a>
     </div>
 {{ form_end(form) }}

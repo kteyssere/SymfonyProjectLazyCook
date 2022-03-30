@@ -57,6 +57,13 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'app_user_admin', methods: ['GET'])]
+    public function adminMode(): Response
+    {
+        return $this->render('user/admin.html.twig', []);
+    }
+
+
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
@@ -106,5 +113,6 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
 
 }

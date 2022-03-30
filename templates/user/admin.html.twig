@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mode administrateur{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="margin-left: 525px; margin-right: 525px; text-align: center; margin-top: 100px; margin-bottom: 130px">
+            <div style=" margin-top: 20px; width: 500px;">
+                <a href="{{ path('app_user_index') }}" class="btn" style="width: 500px; background-color: maroon; border: solid 1px black; color: white; padding: 50px;">Tous les utilisateurs</a>
+            </div>
+            <div style=" margin-top: 20px; width: 500px;">
+                <a href="{{ path('app_category_index') }}" class="btn" style="width: 500px; background-color: lightseagreen; border: solid 1px black; color: white; padding: 50px;">Toutes les catégories</a>
+            </div>
+            <div style=" margin-top: 20px; width: 500px;">
+                <a href="{{ path('app_commentary_index') }}" class="btn" style="width: 500px; background-color: peru; border: solid 1px black; color: white; padding: 50px;">Toutes les commentaires</a>
+            </div>
+        </div>
+    {% else %}
+        <p style="text-align: center; margin-top: 100px;">Cette URL est réservée aux administrateurs du site.</p>
+    {% endif %}
+
+{% endblock %}
+{% block footer %}
+    <div style="background-color: lightgray; height: auto; width: auto; border: solid 1px black; padding: 50px;">
+        <p style="text-align: center; color: black; border: double 4px black; width: 700px; padding: 10px; background-color: white; margin-left: auto; margin-right: auto;">By Karina TEYSSERE & Brandon REYNIER | © 2022 LazyMates, Inc.</p>
+    </div>
+{% endblock %}
