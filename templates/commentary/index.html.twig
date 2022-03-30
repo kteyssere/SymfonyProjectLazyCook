@@ -3,33 +3,44 @@
 {% block title %}Commentary index{% endblock %}
 
 {% block body %}
-    <h1>Commentary index</h1>
+    {% if is_granted('ROLE_ADMIN') %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for commentary in commentaries %}
-            <tr>
-                <td>{{ commentary.id }}</td>
-                <td>{{ commentary.content }}</td>
-                <td>
-                    <a href="{{ path('app_commentary_show', {'id': commentary.id}) }}">show</a>
-                    <a href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <h2>Tous les commentaires</h2>
 
-{#    <a href="{{ path('app_commentary_new') }}">Create new</a>#}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Utilisateur</th>
+                    <th>Recette</th>
+                    <th>Contenu</th>
+                    <th>Date</th>
+                    <th>actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for commentary in commentaries %}
+                <tr>
+                    <td>{{ commentary.id }}</td>
+                    <td>{{ commentary.user.mail }}</td>
+                    <td>{{ commentary.recipe.name }}</td>
+                    <td>{{ commentary.content }}</td>
+                    <td>{{ commentary.datepublicom |date("d/m/Y")}} à {{ commentary.datepublicom |date("H:i")}}</td>
+                    <td>
+                        <a href="{{ path('app_commentary_show', {'id': commentary.id}) }}">Voir</a>
+                        <a href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun commentaire trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{#        <a href="{{ path('app_commentary_new') }}">Ajouter un commentaire</a>#}
+    {% else %}
+        <p style="text-align: center; margin-top: 100px;">Cette URL est réservée aux administrateurs du site.</p>
+    {% endif %}
 {% endblock %}

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenue !{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -40,15 +40,17 @@
                         <a href="{{ path('app_user_new') }}" style="margin-top: 50px; margin-left: 30px;">S'inscrire</a>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 50px; margin-left: 10px;"></a>
-{#                        <li class="dropdown" style="float: right">#}
-{#                            <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 85px; margin-left: 10px;"></a>#}
-{#                            <div class="dropdown-content" style="margin-top: 30px;">#}
-{#                                <a href="#">Utilisateurs</a>#}
-{#                                <a href="#">Recettes</a>#}
-{#                                <a href="#">Catégories</a>#}
-{#                            </div>#}
-{#                        </li>#}
+                        <a href="{{ path('app_user_admin') }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 50px; margin-left: 10px;"></a>
+{#                        <ul>#}
+{#                            <li class="dropdown" style="float: right">#}
+{#                                <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/administrateur.png" style="width: 30px; height: 30px; margin-top: 85px; margin-left: 10px;"></a>#}
+{#                                <div class="dropdown-content" style="margin-top: 30px;">#}
+{#                                    <a href="#">Utilisateurs</a>#}
+{#                                    <a href="#">Recettes</a>#}
+{#                                    <a href="#">Catégories</a>#}
+{#                                </div>#}
+{#                            </li>#}
+{#                        </ul>#}
                     {% endif %}
                 </div>
             </div>
