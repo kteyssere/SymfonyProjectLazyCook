@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\CommentaryType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentaryRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -193,7 +194,8 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/topdf', name: 'recipeToPdf', methods: ['GET'])]
-    public function converToPdf(int $id){
+    public function converToPdf(int $id, Request $request){
+
         $recipe = $this->recipeRepository->find($id);
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
@@ -204,7 +206,8 @@ class RecipeController extends AbstractController
 
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('pdf/index.html.twig', [
-            'recipe' => $recipe
+            'recipe' => $recipe,
+            'httphost' => $request->getHttpHost()
         ]);
 
         // Load HTML to Dompdf
@@ -243,11 +246,14 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recipe_delete', methods: ['POST'])]
-    public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
+    public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, CommentaryRepository $commentaryRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
-//            $com = $recipe->getCommentaries();
-//            $recipe->removeCommentary($com);
+            if(!$recipe->getCommentaries()->isEmpty()){
+                foreach ($recipe->getCommentaries() as $item) {
+                    $commentaryRepository->remove($item);
+                }
+            }
             $recipeRepository->remove($recipe);
         }
 

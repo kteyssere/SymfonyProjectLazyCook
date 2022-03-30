@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\CommentaryRepository;
+use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -83,16 +85,26 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, UserRepository $userRepository, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user, UserRepository $userRepository, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, CommentaryRepository $commentaryRepository, RecipeRepository $recipeRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            if(!$user->getCommentaries()->isEmpty()){
+                foreach ($user->getCommentaries() as $item) {
+                    $commentaryRepository->remove($item);
+                }
+            }
+            if(!$user->getRecipe()->isEmpty()){
+                foreach ($user->getRecipe() as $item) {
+                    $recipeRepository->remove($item);
+                }
+            }
             $userRepository->remove($user);
             $entityManager->flush();
-            $tokenStorage->setToken();
+            //$tokenStorage->setToken();
         }
 
-        return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
 }
