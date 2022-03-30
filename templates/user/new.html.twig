@@ -4,10 +4,10 @@
 
 {% block body %}
     {{ form_start(form) }}
-
     <h4 style="text-align: center; margin-top: 70px; margin-bottom: 40px">S'inscrire</h4>
 
     <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 400px; margin-left: auto; margin-right: auto; text-align: center; margin-bottom: 70px;">
+        {{ form_errors(form) }}
         <div style="margin-left: 10px;">
             <p style="font-size: 14px; margin-top: 30px;">Nom d'utilisateur :</p>
             {{ form_widget(form.name) }}
@@ -18,12 +18,13 @@
         </div>
         <div style="margin-left: 10px;">
             <p style="font-size: 14px; margin-top: 30px;">Mot de passe :</p>
-            {{ form_widget(form.password) }}
+            {{ form_widget(form.password.first) }}
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 14px; margin-top: 30px;">Adresse postale :</p>
-            {{ form_widget(form.address) }}
+            <p style="font-size: 14px; margin-top: 30px;">Confirmer le mot de passe :</p>
+            {{ form_widget(form.password.second) }}
         </div>
+
         <div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
             <button class="btn" style="background-color: black; color: white; font-size: 14px;">{{ button_label|default('Inscription') }}</button>
         </div>
