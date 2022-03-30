@@ -4,6 +4,7 @@
     <h4 style="text-align: center; margin-top: 50px; margin-bottom: 40px">Modifier le profil</h4>
 
     <div style="border: solid 1px black; font-weight: bold; font-size: 20px; padding: 5px; width: 400px; margin-left: auto; margin-right: auto;">
+        {{ form_errors(form) }}
         <div style="margin-left: 10px;">
             <p style="font-size: 14px; margin-top: 30px;">Nom d'utilisateur : {{ form_widget(form.name) }}</p>
         </div>
@@ -11,10 +12,10 @@
             <p style="font-size: 14px; margin-top: 30px;">Adresse mail : {{ form_widget(form.mail) }}</p>
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 14px; margin-top: 30px;">Mot de passe : {{ form_widget(form.password) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Mot de passe : {{ form_widget(form.password.first) }}</p>
         </div>
         <div style="margin-left: 10px;">
-            <p style="font-size: 14px; margin-top: 30px;">Adresse postale : {{ form_widget(form.address) }}</p>
+            <p style="font-size: 14px; margin-top: 30px;">Confirmer le mot de passe : {{ form_widget(form.password.second) }}</p>
         </div>
     </div>
     <div style="text-align: center; margin-top: 50px;">
