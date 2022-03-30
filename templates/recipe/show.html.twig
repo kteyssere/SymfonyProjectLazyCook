@@ -9,7 +9,7 @@
         <p style="text-align: center; padding-bottom: 10px;">par {{ recipe.user.name }} le {{ recipe.datepublire |date("d/m/Y")}} à {{ recipe.datepublire |date("H:i")}}</p>
         <img id="product_img_detail" src="/upload/{{ recipe.picture }}"/>
         <div style="border-bottom: solid 1px black;">
-            <p style="padding-top: 15px; text-align: center;"><img src="/img/time.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.preparationTime }} minutes | <img src="/img/nbperson.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} personne(s) | <img src="/img/level.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
+            <p style="padding-top: 15px; text-align: center;"><img src="/img/time.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.preparationTime }} minute(s) | <img src="/img/nbperson.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} personne(s) | <img src="/img/level.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
         </div>
         <div style="border-bottom: solid 1px black;">
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ingrédients :</h4>

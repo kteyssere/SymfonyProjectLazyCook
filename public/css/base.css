@@ -281,3 +281,46 @@ textarea {
     width: 100px;
     height: 38px;
 }
+
+#recipe_name {
+    width: 320px;
+}
+
+#recipe_category {
+    width: 100px;
+}
+
+#recipe_ingredients {
+    width: 670px;
+    height: 100px;
+}
+
+#recipe_utensils{
+    width: 670px;
+    height: 100px;
+}
+
+#recipe_content{
+    width: 670px;
+    height: 250px;
+}
+
+#recipe_picture{
+    width: 360px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+#recipe_preparationTime{
+    width: 75px;
+}
+
+#recipe_numberOfPerson{
+    width: 75px;
+}
+
+#recipe_difficulty{
+    width: 100px;
+}
+

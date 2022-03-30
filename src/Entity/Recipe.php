@@ -18,10 +18,10 @@ class Recipe
     #[ORM\Column(type: 'string', length: 255)]
     private $picture;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $ingredients;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $utensils;
 
     #[ORM\Column(type: 'integer')]

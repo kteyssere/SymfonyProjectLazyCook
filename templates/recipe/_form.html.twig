@@ -1,4 +1,45 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div style="margin-right: 400px; margin-left: 400px; border: solid 1px black; height: auto;">
+
+{#        {{ form_widget(form.name) }}#}
+{#        {{ form_widget(form.category) }}#}
+{#        {{ form_widget(form.numberOfPerson) }}#}
+{#        {{ form_widget(form.preparationTime) }}#}
+{#        {{ form_widget(form.difficulty) }}#}
+{#        {{ form_widget(form.ingredients) }}#}
+{#        {{ form_widget(form.utensils)}}#}
+{#        {{ form_widget(form.content) }}#}
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Nom :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.name) }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Catégorie :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.category) }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Image :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.picture) }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <p style="padding-top: 15px; text-align: center;"><img src="/img/time.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ form_widget(form.preparationTime) }} minute(s) | <img src="/img/nbperson.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ form_widget(form.numberOfPerson) }} personne(s) | <img src="/img/level.png" style="height: 25px; width: 25px; margin-bottom: 5px;"> {{ form_widget(form.difficulty) }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ingrédients :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.ingredients) }}</p>
+        </div>
+        <div style="border-bottom: solid 1px black;">
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ustensiles :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.utensils)}}</p>
+        </div>
+        <div>
+            <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Préparation :</h4>
+            <p style="text-align: center; padding: 10px;">{{ form_widget(form.content) }}</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+        <button class="btn" style="background-color: green; color: white; margin-right: auto; margin-left: auto; height: 40px;  margin-bottom: 5px; width: 130px;">{{ button_label|default('Créer') }}</button><br>
+        <a href="{{ path('my_recipe', {id: app.user.id}) }}" class="btn" style="height: 40px; background-color: black; color: white; width: 130px; margin-bottom: 50px;">Annuler</a>
+    </div>
 {{ form_end(form) }}
