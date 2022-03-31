@@ -75,6 +75,7 @@ class CommentaryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $commentary->setDatepublicom(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $commentaryRepository->add($commentary);
             return $this->redirectToRoute('app_recipe_show', ['id' => $commentary->getRecipe()->getId()], Response::HTTP_SEE_OTHER);
         }

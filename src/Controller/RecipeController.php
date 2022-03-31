@@ -241,7 +241,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
+    public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, SluggerInterface $slugger): Response
     {
         $pic = $recipe->getPicture();
 
@@ -249,6 +249,32 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe->setPicture($pic);
+
+            /** @var UploadedFile $pictureFile */
+            $pictureFile = $form->get('picture')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($pictureFile) {
+                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictureFile->move(
+                        'upload',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $recipe->setPicture($newFilename);
+            }
 
             $recipeRepository->add($recipe);
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);

@@ -28,7 +28,7 @@ class RecipeType extends AbstractType
             ->add('picture', FileType::class, [
                 'data_class' => null,
                 'label' => 'Photo de la recette',
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Image([
                         'maxSize' => '1024k',

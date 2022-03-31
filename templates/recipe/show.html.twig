@@ -28,15 +28,15 @@
         </div>
         <div style="border-bottom: solid 1px black;">
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ingrédients :</h4>
-            <p style="text-align: center; padding: 10px;">{{ recipe.ingredients }}</p>
+            <p style="text-align: left; padding: 10px;">{{ recipe.ingredients | nl2br}}</p>
         </div>
         <div style="border-bottom: solid 1px black;">
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Ustensiles :</h4>
-            <p style="text-align: center; padding: 10px;">{{ recipe.utensils }}</p>
+            <p style="text-align: left; padding: 10px;">{{ recipe.utensils | nl2br}}</p>
         </div>
         <div>
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Préparation :</h4>
-            <p style="text-align: center; padding: 10px;">{{ recipe.content }}</p>
+            <p style="text-align: left; padding: 10px;">{{ recipe.content | nl2br}}</p>
         </div>
     </div>
 
@@ -80,7 +80,7 @@
                         <p style="font-style: italic;">"{{ commentary.content }}"</p>
                         {% if app.user.id == commentary.user.id %}
                             {{ include('commentary/_delete_form.html.twig') }}
-                            <a class="btn" style="background-color: orange; color: white; width: 98px; margin-top: 5px;" href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">Modifier</a>
+                            <a class="btn" style="background-color: orange; color: white; width: 130px; margin-top: 5px;" href="{{ path('app_commentary_edit', {'id': commentary.id}) }}">Modifier</a>
 
                         {% endif %}
                     </div>
@@ -103,15 +103,18 @@
 {#    {% else %}#}
 {#        <p style="text-align: center;">Pour accéder aux commentaires, veuillez-vous identifier.</p>#}
 {#    {% endif %}#}
+
 {% if is_granted('ROLE_USER') %}
+
     {% if app.user.id == recipe.user.id %}
-        <div>
-            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-            {{ include('recipe/_delete_form.html.twig') }}
+        <div style="text-align: center; margin-bottom: 50px;">
+            <a class="btn" style="background-color: orange; color: white; width: 130px; margin-bottom: 5px;" href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+{#            {{ include('recipe/_delete_form.html.twig') }}#}
         </div>
-    {% elseif is_granted('ROLE_USER') %}
+    {% endif %}
+    {% elseif is_granted('ROLE_ADMIN') %}
         <div>
-            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
             {{ include('recipe/_delete_form.html.twig') }}
         </div>
     {% endif %}

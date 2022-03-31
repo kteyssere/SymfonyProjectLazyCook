@@ -8,7 +8,7 @@
             <a href="{{ path('app_recipe_new') }}">Créer une nouvelle recette</a>
         </div>
     {% endif %}
-    <div class="grille">
+    <div class="grille" style="margin-top: 60px;">
         {% for recipe in recipes %}
             <div class="grid-item">
                 <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>

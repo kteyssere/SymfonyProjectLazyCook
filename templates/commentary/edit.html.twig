@@ -3,11 +3,15 @@
 {% block title %}Edit Commentary{% endblock %}
 
 {% block body %}
-    <h1>Edit Commentary</h1>
+    <h2>Modifier le commentaire</h2>
+        {{ include('commentary/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        <a href="javascript:history.go(-1)" class="btn" style="height: 40px; background-color: black; color: white; width: 130px; margin-bottom: 5px; margin-left: 20px;">Annuler</a>
+    <div style="margin-left: 20px;">
+        {{ include('commentary/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_commentary_index') }}">back to list</a>
+        {% endif %}
+    </div>
 
-    {{ include('commentary/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_commentary_index') }}">back to list</a>
-
-    {{ include('commentary/_delete_form.html.twig') }}
 {% endblock %}
