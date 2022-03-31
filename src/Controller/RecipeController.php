@@ -301,7 +301,10 @@ class RecipeController extends AbstractController
                 }
             }
             $itemtoremove = $favoriteRecipeRepository->findOneBy(['recipe'=>$recipe]);
-            $favoriteRecipeRepository->remove($itemtoremove);
+            if($itemtoremove){
+                $favoriteRecipeRepository->remove($itemtoremove);
+            }
+
             $recipeRepository->remove($recipe);
             $notifier->send(new Notification('Votre recette a bien été supprimé', ['browser']));
         }
