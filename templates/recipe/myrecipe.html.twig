@@ -3,6 +3,7 @@
 {% block title %}Mes recettes{% endblock %}
 
 {% block body %}
+    <h4 style="text-align: center; margin-top: 30px;">Mes recettes</h4>
 
     <div style="text-align: center; margin-top: 30px;">
         <a class="btn" href="{{ path('app_recipe_new') }}" style="color: white; background-color: green;">Ajouter une nouvelle recette</a>
@@ -12,7 +13,7 @@
         {% for recipe in recipes %}
             <div class="grid-item">
                 <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
-                <p class="p">{{ recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.difficulty }}</p>
+                <p class="p">{{ recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.difficulty }} | <img src="/img/heart.png" style="height: 15px; width: 15px; margin: 5px;">{{ recipe.likes }}</p>
                 <a class="btn" style="background-color: orange; color: white;" href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
             </div>
         {% else %}

@@ -3,13 +3,14 @@
 {% block title %}Favorite Recipe{% endblock %}
 
 {% block body %}
+    <h4 style="text-align: center; margin-top: 30px;">Mes favoris</h4>
     <div style="margin-bottom: 250px;">
         {% if is_granted('ROLE_USER') %}
         <div class="grille">
             {% for fav_recipe in favorite_recipes %}
                 <div class="grid-item">
                     <a href="{{ path('app_recipe_show', {'id': fav_recipe.recipe.id}) }}"><img id="product_img" src="/upload/{{ fav_recipe.recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
-                    <p class="p">{{ fav_recipe.recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.difficulty }}</p>
+                    <p class="p">{{ fav_recipe.recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ fav_recipe.recipe.difficulty }} | <img src="/img/heart.png" style="height: 15px; width: 15px; margin: 5px;">{{ fav_recipe.recipe.likes }}</p>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('app_recipe_show', {'id': fav_recipe.recipe.id}) }}">Voir</a>
                         <a href="{{ path('app_recipe_edit', {'id': fav_recipe.recipe.id}) }}">Modifier</a>
