@@ -233,8 +233,6 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe->setPicture($pic);
-
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form->get('picture')->getData();
 
@@ -259,10 +257,12 @@ class RecipeController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $recipe->setPicture($newFilename);
+            } else {
+                $recipe->setPicture($pic);
             }
 
             $recipeRepository->add($recipe);
-            return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recipe_show', ['id'=>$recipe->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('recipe/edit.html.twig', [
