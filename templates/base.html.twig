@@ -32,6 +32,7 @@
                 <div style="float: right;">
                     {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('my_recipe', {id: app.user.id}) }}" style="margin-top: 50px; margin-right: 30px;"><img id="imgnavbar" src="/img/toque.png">Mes recettes</a>
+                        <a href="{{ path('all_my_favorite_recipe') }}" style="margin-top: 50px; margin-right: 30px;">Mes favoris</a>
                         <a href="{{ path('logout') }}" style="margin-top: 56px; margin-right: 30px;">Se déconnecter</a>
                         <b style="color: white; float: left; margin-right: 15px; margin-top: 53px;">| {{ app.user.name }}</b>
                         <a href="{{ path('app_user_show', {id: app.user.id}) }}"><img src="/img/profile_icon.png" style="width: 30px; height: 30px; margin-top: 50px;"></a>

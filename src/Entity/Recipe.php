@@ -53,10 +53,17 @@ class Recipe
     #[ORM\Column(type: 'datetime', nullable: false)]
     private $datepublire;
 
+    #[ORM\OneToMany(mappedBy: 'Recipe', targetEntity: FavoriteRecipe::class)]
+    private $favoriteRecipes;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $likes;
+
 
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
+        $this->favoriteRecipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +229,48 @@ class Recipe
     public function setDatepublire(\DateTimeInterface $datepublire): self
     {
         $this->datepublire = $datepublire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteRecipe>
+     */
+    public function getFavoriteRecipes(): Collection
+    {
+        return $this->favoriteRecipes;
+    }
+
+    public function addFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if (!$this->favoriteRecipes->contains($favoriteRecipe)) {
+            $this->favoriteRecipes[] = $favoriteRecipe;
+            $favoriteRecipe->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if ($this->favoriteRecipes->removeElement($favoriteRecipe)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteRecipe->getRecipe() === $this) {
+                $favoriteRecipe->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?int $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }
