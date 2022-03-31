@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -131,7 +133,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_recipe_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RecipeRepository $recipeRepository, SluggerInterface $slugger): Response
+    public function new(Request $request, RecipeRepository $recipeRepository, SluggerInterface $slugger, NotifierInterface $notifier): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -174,6 +176,7 @@ class RecipeController extends AbstractController
 
 
             $recipeRepository->add($recipe);
+            $notifier->send(new Notification('Votre recette a bien été crée', ['browser']));
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -209,7 +212,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/topdf', name: 'recipeToPdf', methods: ['GET'])]
-    public function converToPdf(int $id, Request $request){
+    public function converToPdf(int $id, Request $request, NotifierInterface $notifier){
 
         $recipe = $this->recipeRepository->find($id);
         // Configure Dompdf according to your needs
@@ -220,6 +223,7 @@ class RecipeController extends AbstractController
         $dompdf = new Dompdf($pdfOptions);
 
         // Retrieve the HTML generated in our twig file
+        $notifier->send(new Notification('Le pdf de la recette a bien été créé', ['browser']));
         $html = $this->renderView('pdf/index.html.twig', [
             'recipe' => $recipe,
             'httphost' => $request->getHttpHost()
@@ -241,7 +245,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, SluggerInterface $slugger, NotifierInterface $notifier): Response
     {
         $pic = $recipe->getPicture();
 
@@ -277,6 +281,7 @@ class RecipeController extends AbstractController
             }
 
             $recipeRepository->add($recipe);
+            $notifier->send(new Notification('Votre recette a bien été modifié', ['browser']));
             return $this->redirectToRoute('app_recipe_show', ['id'=>$recipe->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -287,7 +292,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recipe_delete', methods: ['POST'])]
-    public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, CommentaryRepository $commentaryRepository): Response
+    public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, CommentaryRepository $commentaryRepository, NotifierInterface $notifier, FavoriteRecipeRepository $favoriteRecipeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
             if(!$recipe->getCommentaries()->isEmpty()){
@@ -295,7 +300,10 @@ class RecipeController extends AbstractController
                     $commentaryRepository->remove($item);
                 }
             }
+            $itemtoremove = $favoriteRecipeRepository->findOneBy(['recipe'=>$recipe]);
+            $favoriteRecipeRepository->remove($itemtoremove);
             $recipeRepository->remove($recipe);
+            $notifier->send(new Notification('Votre recette a bien été supprimé', ['browser']));
         }
 
         return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);

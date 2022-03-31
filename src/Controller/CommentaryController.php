@@ -10,6 +10,8 @@ use App\Repository\CommentaryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
@@ -37,7 +39,7 @@ class CommentaryController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_commentary_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentaryRepository $commentaryRepository, Recipe $recipe): Response
+    public function new(Request $request, CommentaryRepository $commentaryRepository, Recipe $recipe, NotifierInterface $notifier): Response
     {
         $commentary = new Commentary();
         $form = $this->createForm(CommentaryType::class, $commentary);
@@ -51,6 +53,7 @@ class CommentaryController extends AbstractController
             $commentary->setRecipe($recipe);
             $commentary->setUser($user);
             $commentaryRepository->add($commentary);
+            $notifier->send(new Notification('Votre commentaire a bien été ajouté', ['browser']));
             return $this->redirectToRoute('app_recipe_show', ['id' => $recipe->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -69,7 +72,7 @@ class CommentaryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_commentary_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Commentary $commentary, CommentaryRepository $commentaryRepository): Response
+    public function edit(Request $request, Commentary $commentary, CommentaryRepository $commentaryRepository, NotifierInterface $notifier): Response
     {
         $form = $this->createForm(CommentaryType::class, $commentary);
         $form->handleRequest($request);
@@ -77,6 +80,7 @@ class CommentaryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $commentary->setDatepublicom(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $commentaryRepository->add($commentary);
+            $notifier->send(new Notification('Votre commentaire a bien été modifié', ['browser']));
             return $this->redirectToRoute('app_recipe_show', ['id' => $commentary->getRecipe()->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -87,11 +91,12 @@ class CommentaryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_commentary_delete', methods: ['POST'])]
-    public function delete(Request $request, Commentary $commentary, CommentaryRepository $commentaryRepository): Response
+    public function delete(Request $request, Commentary $commentary, CommentaryRepository $commentaryRepository, NotifierInterface $notifier): Response
     {
         $recipeId = $commentary->getRecipe()->getId();
         if ($this->isCsrfTokenValid('delete'.$commentary->getId(), $request->request->get('_token'))) {
             $commentaryRepository->remove($commentary);
+            $notifier->send(new Notification('Votre commentaire a bien été supprimé', ['browser']));
         }
 
         return $this->redirectToRoute('app_recipe_show', ['id' => $recipeId], Response::HTTP_SEE_OTHER);

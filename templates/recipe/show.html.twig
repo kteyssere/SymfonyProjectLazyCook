@@ -109,9 +109,8 @@
     {% if app.user.id == recipe.user.id %}
         <div style="text-align: center; margin-bottom: 50px;">
             <a class="btn" style="background-color: orange; color: white; width: 130px; margin-bottom: 5px;" href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
-{#            {{ include('recipe/_delete_form.html.twig') }}#}
+            {{ include('recipe/_delete_form.html.twig') }}
         </div>
-    {% endif %}
     {% elseif is_granted('ROLE_ADMIN') %}
         <div>
             <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
