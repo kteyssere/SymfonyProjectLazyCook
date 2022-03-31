@@ -121,6 +121,22 @@ class RecipeRepository extends ServiceEntityRepository
             ;
     }
 
+
+     /**
+      * @return Recipe[] Returns an array of Recipe objects
+      */
+    public function findByMostLiked()
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.likes > 0')
+            ->orderBy('r.likes', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     // /**
     //  * @return Recipe[] Returns an array of Recipe objects
     //  */

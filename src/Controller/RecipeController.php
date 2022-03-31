@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Commentary;
+use App\Entity\FavoriteRecipe;
 use App\Entity\Recipe;
 use App\Entity\User;
 use App\Form\CommentaryType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentaryRepository;
+use App\Repository\FavoriteRecipeRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -110,8 +112,11 @@ class RecipeController extends AbstractController
             $recipes = $recipeRepository->findAll();
         }
 
+        $recipesMostLiked = $recipeRepository->findByMostLiked();
+
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
+            'recipes_most_liked'=>$recipesMostLiked,
             'form' => $form->createView()
         ]);
     }
@@ -139,7 +144,6 @@ class RecipeController extends AbstractController
             $user = $this->security->getUser();
 
             $recipe->setUser($user);
-
 
 
             /** @var UploadedFile $pictureFile */
@@ -180,15 +184,26 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'])]
-    public function show(Recipe $recipe): Response
+    public function show(Recipe $recipe, FavoriteRecipeRepository $favoriteRecipeRepository): Response
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
         $commentary = new Commentary();
         $commentary->setRecipe($recipe);
         $form = $this->createForm(CommentaryType::class, $commentary);
+        $isIn = false;
+        if ($user){
+            if($favoriteRecipeRepository->findBy(['recipe'=>$recipe->getId()]) && $favoriteRecipeRepository->findBy(['user'=>$user->getId(), 'recipe' => $recipe->getId()])){
+                $isIn = true;
+            }else{
+                $isIn = false;
+            }
+        }
 
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'commentary' => $recipe->getCommentaries(),
+            'isIn'=> $isIn,
             'form' => $form->createView()
         ]);
     }

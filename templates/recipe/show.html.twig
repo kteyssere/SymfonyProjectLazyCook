@@ -5,6 +5,21 @@
 {% block body %}
 
     <div style="margin-right: 400px; margin-left: 400px; border: solid 1px black; margin-top: 100px; height: auto; margin-bottom: 100px; ">
+        {% for message in app.flashes('notification') %}
+                    <div class="alert alert-info alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+        {% endfor %}
+        {% if is_granted('ROLE_USER') %}
+            {% if  isIn %}
+                <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}">Supprimer des favoris</a>
+                {% else %}
+            <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}">Ajouter au favoris</a>
+                    {% endif %}
+
+        <p>nb likes {{ recipe.likes }}</p>
+        {% endif %}
         <h2 style="text-align: center; padding-top: 15px;">{{ recipe.name }}</h2>
         <p style="text-align: center; padding-bottom: 10px;">par {{ recipe.user.name }} le {{ recipe.datepublire |date("d/m/Y")}} à {{ recipe.datepublire |date("H:i")}}</p>
         <img id="product_img_detail" src="/upload/{{ recipe.picture }}"/>
@@ -89,7 +104,8 @@
 {#        <p style="text-align: center;">Pour accéder aux commentaires, veuillez-vous identifier.</p>#}
 {#    {% endif %}#}
 
-    {% if is_granted('ROLE_USER')%}
+{% if is_granted('ROLE_USER') %}
+
     {% if app.user.id == recipe.user.id %}
         <div style="text-align: center; margin-bottom: 50px;">
             <a class="btn" style="background-color: orange; color: white; width: 130px; margin-bottom: 5px;" href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
@@ -101,6 +117,7 @@
             <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
             {{ include('recipe/_delete_form.html.twig') }}
         </div>
+    {% endif %}
     {% endif %}
 
 
