@@ -13,12 +13,10 @@
         {% endfor %}
         {% if is_granted('ROLE_USER') %}
             {% if  isIn %}
-                <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}">Supprimer des favoris</a>
-                {% else %}
-            <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}">Ajouter au favoris</a>
-                    {% endif %}
-
-        <p>nb likes {{ recipe.likes }}</p>
+                <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}"><img src="/img/filled_heart.png" style="height: 25px; width: 25px; margin: 5px;"></a>{{ recipe.likes }}
+            {% else %}
+                <a href="{{ path('app_favorite_recipe_new', {id: recipe.id}) }}"><img src="/img/empty_heart.png" style="height: 25px; width: 25px; margin: 5px;"></a>{{ recipe.likes }}
+            {% endif %}
         {% endif %}
         <h2 style="text-align: center; padding-top: 15px;">{{ recipe.name }}</h2>
         <p style="text-align: center; padding-bottom: 10px;">par {{ recipe.user.name }} le {{ recipe.datepublire |date("d/m/Y")}} à {{ recipe.datepublire |date("H:i")}}</p>
@@ -67,10 +65,10 @@
                 <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Commentaires :</h4>
             </div>
             {% if is_granted('ROLE_USER') %}
-            <div style="text-align: center;">
+            <div style="text-align: center; margin-right: auto; margin-left: auto;">
                 {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}
                 {{ form_widget(form.content) }}
-                <button class="btn" style="color: white; background-color: blue; width: 700px; margin-left: 8px; margin-right: 5px; margin-bottom: 10px;">{{ button_label|default('Publier') }}</button>
+                <button class="btn" style="color: white; background-color: blue; width: 98%; margin-bottom: 10px;">{{ button_label|default('Publier') }}</button>
                 {{ form_end(form) }}
             </div>
             <div style="text-align: left; border-top: solid 1px black;">
@@ -117,7 +115,7 @@
             {{ include('recipe/_delete_form.html.twig') }}
         </div>
     {% endif %}
-    {% endif %}
+{% endif %}
 
 
 {#    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}#}

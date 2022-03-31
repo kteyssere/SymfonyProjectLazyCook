@@ -114,11 +114,9 @@ class RecipeController extends AbstractController
             $recipes = $recipeRepository->findAll();
         }
 
-        $recipesMostLiked = $recipeRepository->findByMostLiked();
 
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
-            'recipes_most_liked'=>$recipesMostLiked,
             'form' => $form->createView()
         ]);
     }
@@ -174,7 +172,7 @@ class RecipeController extends AbstractController
                 $recipe->setPicture($newFilename);
             }
 
-
+            $recipe->setLikes(0);
             $recipeRepository->add($recipe);
             $notifier->send(new Notification('Votre recette a bien été crée', ['browser']));
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);

@@ -29,6 +29,22 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    <div style="margin-top: 90px;">
+        {% if recipes_most_liked %}
+            <h4 style="text-align: center; margin-bottom: 50px;">Les recettes les plus aimées</h4>
+            <div class="grille">
+                {% for recipe in recipes_most_liked %}
+                    <div class="grid-item">
+                        <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}"><img id="product_img" src="/upload/{{ recipe.picture }}" style="border-radius: 10px 10px 0px 0px;"/></a>
+                        <p class="p">{{ recipe.name }}<br><img src="/img/nbperson.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.numberOfPerson }} | <img src="/img/time.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.preparationTime }}min | <img src="/img/level.png" style="height: 15px; width: 15px; margin-bottom: 5px;"> {{ recipe.difficulty }} | <img src="/img/heart.png" style="height: 15px; width: 15px; margin: 5px;">{{ recipe.likes }}</p>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Voir</a>
+                            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 {% block footer %}

@@ -181,6 +181,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
+    public function CheckCredentials(){
+
+    }
+
     public function getUserIdentifier(): string
     {
         return $this->getMail();
