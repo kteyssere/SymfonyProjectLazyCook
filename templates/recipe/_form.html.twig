@@ -1,6 +1,7 @@
 {{ form_start(form) }}
 
     <div style="margin-right: 400px; margin-left: 400px; border: solid 1px black; height: auto;">
+        {{ form_errors(form) }}
         <div style="border-bottom: solid 1px black;">
             <h4 style="text-align: center; padding: 5px; border-bottom: dashed 1px black;">Nom :</h4>
             <p style="text-align: center; padding: 10px;">{{ form_widget(form.name) }}</p>

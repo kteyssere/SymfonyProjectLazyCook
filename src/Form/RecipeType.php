@@ -8,10 +8,13 @@ use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
 
 class RecipeType extends AbstractType
 {
@@ -35,7 +38,16 @@ class RecipeType extends AbstractType
                     ])
                 ],
             ])
-            ->add('name')
+            ->add('name', TextType::class, [
+                'error_bubbling' => true,
+                'constraints' => [
+                    new Length([
+                        'max' => 40,
+                        'maxMessage' => 'Le nom doit être de maximum {{ limit }} caractères',
+
+                    ]),
+                ]
+            ])
             ->add('category', ChoiceType::class, [
                 'choices' => $this->categoryRepository->findAll(),
                 'choice_value' => 'id',
