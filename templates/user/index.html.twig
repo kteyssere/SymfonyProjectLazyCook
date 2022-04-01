@@ -14,7 +14,6 @@
                     <th>Nom d'utilisateur</th>
                     <th>Adresse mail</th>
                     <th>Mot de passe</th>
-{#                    <th>Roles</th>#}
                     <th>actions</th>
                 </tr>
             </thead>
@@ -25,9 +24,6 @@
                     <td>{{ user.name }}</td>
                     <td>{{ user.mail }}</td>
                     <td>{{ user.password }}</td>
-{#                    <td>{% for role in user %}#}
-{#                            {{ role }}#}
-{#                        {% endfor %}</td>#}
                     <td>
                         <a href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
                         <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>

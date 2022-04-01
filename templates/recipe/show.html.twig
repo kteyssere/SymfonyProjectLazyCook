@@ -90,18 +90,6 @@
             {% endif %}
         </div>
 
-
-{#    {% if is_granted('ROLE_USER') %}#}
-{#        <div>#}
-{#            {% for comm in commentary %}#}
-{#                <p>{{ comm.user.name }}</p>#}
-{#                <p>{{ comm.content }}</p>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    {% else %}#}
-{#        <p style="text-align: center;">Pour accéder aux commentaires, veuillez-vous identifier.</p>#}
-{#    {% endif %}#}
-
 {% if is_granted('ROLE_USER') %}
 
     {% if app.user.id == recipe.user.id %}
@@ -116,11 +104,5 @@
         </div>
     {% endif %}
 {% endif %}
-
-
-{#    {{ form_start(form, {'action': path('app_commentary_new', {id: recipe.id}), 'method': 'POST'}) }}#}
-{#    {{ form_widget(form) }}#}
-{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
-{#    {{ form_end(form) }}#}
 
 {% endblock %}

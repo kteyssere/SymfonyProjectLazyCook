@@ -29,10 +29,6 @@
             <button class="btn" style="background-color: black; color: white; font-size: 14px;">{{ button_label|default('Inscription') }}</button>
         </div>
     </div>
-
-{#    {{ include('user/_form.html.twig') }}#}
-
-{#    <a href="{{ path('app_user_index') }}">back to list</a>#}
     {{ form_end(form) }}
 {% endblock %}
 {% block footer %}
