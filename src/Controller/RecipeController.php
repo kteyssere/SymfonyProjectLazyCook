@@ -298,9 +298,11 @@ class RecipeController extends AbstractController
                     $commentaryRepository->remove($item);
                 }
             }
-            $itemtoremove = $favoriteRecipeRepository->findOneBy(['recipe'=>$recipe]);
+            $itemtoremove = $favoriteRecipeRepository->findBy(['recipe'=>$recipe]);
             if($itemtoremove){
-                $favoriteRecipeRepository->remove($itemtoremove);
+                foreach ($recipe->getFavoriteRecipes() as $item) {
+                    $favoriteRecipeRepository->remove($item);
+                }
             }
 
             $recipeRepository->remove($recipe);
